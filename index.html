@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(
+                135deg,
+                #f7f1ee,
+                #efe3de,
+                #f9f5f2
+            );
+            overflow:hidden;
+            font-family: "Cormorant Garamond", serif;
+        }
+
+        .container{
+            position:relative;
+            width:100%;
+            max-width:900px;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        /* SOBRE */
+
+        .envelope{
+            position:relative;
+            width:340px;
+            height:230px;
+            cursor:pointer;
+            transition:all .8s ease;
+        }
+
+        .back{
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:#e9d6cf;
+            border-radius:10px;
+            box-shadow:0 15px 40px rgba(0,0,0,.18);
+        }
+
+        .flap{
+            position:absolute;
+            width:100%;
+            height:100%;
+            clip-path: polygon(0 0, 50% 52%, 100% 0);
+            background:#dcc0b5;
+            transform-origin:top;
+            transition:transform 1s ease;
+            z-index:5;
+        }
+
+        .heart{
+            position:absolute;
+            top:85px;
+            left:50%;
+            transform:translateX(-50%);
+            width:70px;
+            height:70px;
+            background:#b56c6c;
+            rotate:45deg;
+            z-index:10;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            transition:.4s;
+        }
+
+        .heart::before,
+        .heart::after{
+            content:"";
+            position:absolute;
+            width:70px;
+            height:70px;
+            background:#b56c6c;
+            border-radius:50%;
+        }
+
+        .heart::before{
+            top:-35px;
+        }
+
+        .heart::after{
+            left:-35px;
+        }
+
+        .heart span{
+            rotate:-45deg;
+            color:white;
+            font-size:18px;
+            z-index:11;
+            font-family:sans-serif;
+        }
+
+        .heart:hover{
+            transform:translateX(-50%) scale(1.08);
+        }
+
+        /* CARTA */
+
+        .letter{
+            position:absolute;
+            width:650px;
+            max-width:90%;
+            background:#fffdfb;
+            padding:45px;
+            border-radius:18px;
+            box-shadow:0 20px 60px rgba(0,0,0,.15);
+            opacity:0;
+            transform:translateY(80px) scale(.9);
+            transition:all 1s ease;
+            pointer-events:none;
+        }
+
+        .letter h1{
+            text-align:center;
+            font-size:60px;
+            color:#a86565;
+            font-family:"Great Vibes", cursive;
+            margin-bottom:25px;
+        }
+
+        .letter p{
+            font-size:24px;
+            line-height:1.7;
+            color:#555;
+            text-align:justify;
+        }
+
+        /* REPRODUCTOR */
+
+        .music{
+            margin-top:35px;
+            padding-top:25px;
+            border-top:1px solid #e6d9d2;
+            text-align:center;
+        }
+
+        .music h2{
+            font-size:30px;
+            color:#8a5c5c;
+            margin-bottom:15px;
+        }
+
+        audio{
+            width:100%;
+        }
+
+        /* ANIMACIÓN */
+
+        .open .flap{
+            transform:rotateX(180deg);
+        }
+
+        .show-letter{
+            opacity:1;
+            transform:translateY(0) scale(1);
+            pointer-events:all;
+        }
+
+        .hide-envelope{
+            opacity:0;
+            transform:scale(.6);
+            pointer-events:none;
+        }
+
+        .flowers{
+            position:absolute;
+            inset:0;
+            pointer-events:none;
+        }
+
+        .flower{
+            position:absolute;
+            font-size:24px;
+            animation:fall linear infinite;
+            opacity:.7;
+        }
+
+        @keyframes fall{
+            from{
+                transform:translateY(-100px);
+            }
+
+            to{
+                transform:translateY(110vh);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="flowers" id="flowers"></div>
+
+<div class="container">
+
+    <div class="envelope" id="envelope">
+
+        <div class="back"></div>
+
+        <div class="flap"></div>
+
+        <div class="heart" id="openBtn">
+            <span>❤</span>
+        </div>
+
+    </div>
+
+    <div class="letter" id="letter">
+
+        <h1>Para ti</h1>
+
+        <p>
+
+            Aquí escribe tu carta.
+
+            Puedes contarle lo mucho que te gusta hablar con él, los momentos
+            que han compartido y todo aquello que deseas expresar.
+
+            Este espacio está pensado para que pongas algo sincero y especial.
+
+        </p>
+
+        <div class="music">
+
+            <h2>🎵 Nuestra canción</h2>
+
+            <audio controls>
+                <source src="cancion.mp3" type="audio/mpeg">
+                Tu navegador no soporta audio.
+            </audio>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+    const openBtn = document.getElementById("openBtn");
+
+    openBtn.addEventListener("click", () => {
+
+        envelope.classList.add("open");
+
+        setTimeout(() => {
+            envelope.classList.add("hide-envelope");
+            letter.classList.add("show-letter");
+        }, 900);
+
+    });
+
+    const flowers = document.getElementById("flowers");
+
+    for(let i = 0; i < 18; i++){
+
+        const flower = document.createElement("div");
+
+        flower.className = "flower";
+
+        flower.innerHTML = Math.random() > 0.5 ? "🌸" : "✨";
+
+        flower.style.left = Math.random() * 100 + "%";
+
+        flower.style.animationDuration =
+            (8 + Math.random() * 10) + "s";
+
+        flower.style.fontSize =
+            (18 + Math.random() * 18) + "px";
+
+        flowers.appendChild(flower);
+
+    }
+
+</script>
+
+</body>
+</html>
