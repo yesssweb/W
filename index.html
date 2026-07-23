@@ -7,14 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #0b0809;
+      --bg-color: #0a0708;
       --accent-pink: #e8a598;
       --accent-soft: #f4cac2;
-      /* Color del sobre más definido para contrastar */
-      --envelope-main: #231b1e;
-      --envelope-flap: #2d2327;
-      --paper-bg: #f7eee9;
+      --envelope-main: #21191c;
+      --envelope-flap: #2a2024;
+      --paper-bg: #f8f0eb;
       --text-brown: #3d2b1f;
+      /* Rojo quemado para los pétalos */
+      --petal-red: #8b1e2b;
+      --petal-dark: #4a0e17;
     }
 
     * {
@@ -35,10 +37,10 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      background: radial-gradient(circle at center, #1c1317 0%, #080607 85%);
+      background: radial-gradient(circle at center, #1e1317 0%, #080506 85%);
     }
 
-    /* DESTELLOS Y PÉTALOS EN EL FONDO */
+    /* FONDO DESTELLOS */
     .sparkle-bg {
       position: absolute;
       width: 100%;
@@ -46,29 +48,31 @@
       pointer-events: none;
       background-image: 
         radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px),
-        radial-gradient(circle, rgba(232, 165, 152, 0.5) 1.5px, transparent 1.5px);
-      background-size: 100px 100px, 160px 160px;
+        radial-gradient(circle, rgba(232, 165, 152, 0.4) 1.5px, transparent 1.5px);
+      background-size: 110px 110px, 170px 170px;
       background-position: 0 0, 30px 50px;
       opacity: 0.35;
     }
 
+    /* PÉTALOS EN ROJO QUEMADO */
     .petal {
       position: absolute;
-      background: linear-gradient(135deg, #a32e3a, #e8a598);
-      border-radius: 15px 0 15px 0;
-      opacity: 0.75;
+      background: linear-gradient(135deg, var(--petal-red), var(--petal-dark));
+      border-radius: 80% 0 80% 10%;
+      opacity: 0.85;
       pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
       animation: floatPetal 6s ease-in-out infinite alternate;
+      border: 1px solid rgba(255,255,255,0.05);
     }
-    .p1 { width: 18px; height: 18px; top: 78%; left: 10%; transform: rotate(25deg); }
-    .p2 { width: 14px; height: 14px; top: 82%; left: 82%; transform: rotate(-40deg); }
-    .p3 { width: 20px; height: 20px; top: 15%; left: 80%; transform: rotate(15deg); }
-    .p4 { width: 16px; height: 16px; top: 20%; left: 12%; transform: rotate(-60deg); }
+    .p1 { width: 22px; height: 26px; top: 76%; left: 8%; transform: rotate(35deg); }
+    .p2 { width: 18px; height: 22px; top: 82%; left: 82%; transform: rotate(-45deg); }
+    .p3 { width: 24px; height: 28px; top: 14%; left: 82%; transform: rotate(15deg); }
+    .p4 { width: 20px; height: 24px; top: 22%; left: 10%; transform: rotate(-55deg); }
 
     @keyframes floatPetal {
       0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-8px) rotate(10deg); }
+      100% { transform: translateY(-8px) rotate(8deg); }
     }
 
     /* CONTENEDOR PRINCIPAL */
@@ -85,64 +89,102 @@
       z-index: 10;
     }
 
-    /* 1. TÍTULO CON TRANSICIÓN INICIAL */
+    /* TÍTULO INICIAL (SIEMPRE VISIBLE) */
     .header-title {
       font-family: 'Alex Brush', cursive;
-      font-size: 2.7rem;
+      font-size: 2.8rem;
       color: var(--accent-pink);
       text-shadow: 0 0 12px rgba(232, 165, 152, 0.4);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-align: center;
-      opacity: 0;
-      animation: fadeInTitle 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
+      animation: fadeIn 1s ease forwards;
     }
 
-    @keyframes fadeInTitle {
-      from { opacity: 0; transform: translateY(-15px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* PANTALLA INICIAL (BOTÓN) */
+    .intro-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+      animation: fadeIn 1.2s ease forwards;
     }
 
-    /* 2. SOBRE CON TRANSICIÓN DE ENTRADA */
+    .btn-start-gift {
+      background: linear-gradient(135deg, rgba(232, 165, 152, 0.15), rgba(232, 165, 152, 0.05));
+      border: 1.5px solid var(--accent-pink);
+      color: var(--accent-pink);
+      padding: 14px 26px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px rgba(232, 165, 152, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    .btn-start-gift:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(232, 165, 152, 0.2); transform: scale(1); }
+      100% { box-shadow: 0 0 25px rgba(232, 165, 152, 0.5); transform: scale(1.03); }
+    }
+
+    /* ESTAPAS CARTA Y MÚSICA */
+    .letter-stage-wrapper {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* EL SOBRE CON TEXTURA Y PROFUNDIDAD */
     .envelope-wrapper {
       position: relative;
-      width: 290px;
-      height: 185px;
+      width: 295px;
+      height: 190px;
       background-color: var(--envelope-main);
-      border: 1px solid rgba(232, 165, 152, 0.3); /* Borde sutil para resaltar */
+      border: 1px solid rgba(232, 165, 152, 0.35);
       border-radius: 8px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.85);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.6);
       cursor: pointer;
       display: flex;
       justify-content: center;
-      margin-top: 40px; /* Bajado un poco más en la pantalla del teléfono */
-      
-      /* Animación de entrada deslizando desde abajo */
+      margin-top: 25px;
       opacity: 0;
-      animation: slideUpEnvelope 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s;
+      animation: slideUpEnvelope 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
     }
 
     @keyframes slideUpEnvelope {
-      from { opacity: 0; transform: translateY(40px); }
+      from { opacity: 0; transform: translateY(45px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Solapa del sobre */
+    /* Solapa con textura */
     .envelope-wrapper .flap {
       position: absolute;
       top: 0;
       left: -1px;
       width: 0;
       height: 0;
-      border-left: 146px solid transparent;
-      border-right: 146px solid transparent;
-      border-top: 105px solid var(--envelope-flap);
+      border-left: 148px solid transparent;
+      border-right: 148px solid transparent;
+      border-top: 108px solid var(--envelope-flap);
       transform-origin: top;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s ease 0.3s;
       z-index: 4;
-      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
     }
 
-    /* Cuerpo inferior del sobre */
+    /* Bolsillo del sobre */
     .envelope-wrapper .pocket {
       position: absolute;
       bottom: 0;
@@ -153,40 +195,57 @@
       clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
       border-radius: 0 0 8px 8px;
       z-index: 3;
+      box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5);
     }
 
-    /* Sello de Corazón */
-    .heart-seal {
+    /* SELLO DE LACRE EN 3D DETALLADO */
+    .heart-seal-3d {
       position: absolute;
-      top: 98px;
+      top: 102px;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.9rem;
-      color: var(--accent-pink);
+      width: 44px;
+      height: 44px;
+      background: radial-gradient(circle at 30% 30%, #f7b2a7, #e8a598 40%, #b86b60 80%, #7a3830);
+      border-radius: 50%;
       z-index: 5;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
-      transition: opacity 0.4s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 
+        0 4px 12px rgba(0,0,0,0.8), 
+        inset 0 2px 4px rgba(255,255,255,0.6),
+        inset 0 -3px 6px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: opacity 0.4s ease, transform 0.3s ease;
+    }
+
+    .heart-seal-3d::after {
+      content: '♥';
+      font-size: 1.3rem;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     /* Papel de la Carta */
     .paper-letter {
       position: absolute;
       bottom: 10px;
-      width: 265px;
-      height: 165px;
+      width: 270px;
+      height: 170px;
       background-color: var(--paper-bg);
       border-radius: 6px;
       padding: 18px 12px 12px 12px;
       color: var(--text-brown);
       z-index: 2;
-      box-shadow: 0 -3px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
       transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, height 0.8s ease 0.2s;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Contenido con scroll interno */
+    /* Scroll interno */
     .letter-scroll-content {
       width: 100%;
       height: 100%;
@@ -225,12 +284,11 @@
       z-index: 1;
     }
 
-    .envelope-wrapper.open .heart-seal {
+    .envelope-wrapper.open .heart-seal-3d {
       opacity: 0;
       pointer-events: none;
     }
 
-    /* Desplazamiento equilibrado para que no quede muy arriba en móviles */
     .envelope-wrapper.open .paper-letter {
       transform: translateY(-80px);
       height: 310px;
@@ -246,12 +304,10 @@
       font-size: 0.8rem;
       color: var(--accent-pink);
       opacity: 0;
-      animation: fadeInTitle 1.2s ease forwards 1.2s;
+      animation: fadeIn 1.2s ease forwards 0.8s;
     }
 
-    /* --------------------------------------------------
-       FASE 2: REPRODUCTOR MÁS PEQUEÑO Y COMPACTO
-    -------------------------------------------------- */
+    /* REPRODUCTOR MÚSICA */
     .music-stage {
       display: none;
       flex-direction: column;
@@ -277,7 +333,6 @@
       min-height: 50px;
     }
 
-    /* Casete más pequeño */
     .cassette {
       width: 250px;
       height: 145px;
@@ -374,6 +429,7 @@
 
   <div class="sparkle-bg"></div>
   
+  <!-- Pétalos en Rojo Quemado -->
   <div class="petal p1"></div>
   <div class="petal p2"></div>
   <div class="petal p3"></div>
@@ -381,13 +437,23 @@
 
   <div class="stage-container">
 
-    <!-- FASE 1: SOBRE Y CARTA -->
-    <div id="letterStage" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-      <h1 class="header-title">Para alguien especial...</h1>
+    <!-- TÍTULO PRINCIPAL (SIEMPRE VISIBLE AT TOP) -->
+    <h1 class="header-title" id="mainTitle">Para alguien especial...</h1>
+
+    <!-- PANTALLA 0: BOTÓN INICIAL -->
+    <div class="intro-screen" id="introScreen">
+      <button class="btn-start-gift" onclick="revealLetterStage()">
+        <span>Tienes un mensaje especial...</span>
+        <span>✨</span>
+      </button>
+    </div>
+
+    <!-- PANTALLA 1: SOBRE Y CARTA -->
+    <div class="letter-stage-wrapper" id="letterStage">
 
       <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
         <div class="flap"></div>
-        <div class="heart-seal">♥</div>
+        <div class="heart-seal-3d"></div>
         <div class="pocket"></div>
 
         <div class="paper-letter">
@@ -407,12 +473,11 @@
         </div>
       </div>
 
-      <p class="instruction-text" id="instruction">Toca el corazón para abrir</p>
+      <p class="instruction-text" id="instruction">Toca el sello para abrir</p>
     </div>
 
-    <!-- FASE 2: MÚSICA -->
+    <!-- PANTALLA 2: MÚSICA -->
     <div class="music-stage" id="musicStage">
-      <h1 class="header-title" style="animation: none; opacity: 1;">Nuestra canción</h1>
 
       <div class="lyrics-box">
         "Te siento al cantar y al escuchar cualquier canción bonita que hable del amor, de lo que siento ayer y hoy. Siempre te llevo al despertar."
@@ -441,13 +506,20 @@
   <audio id="audio" src="cancion.mp3"></audio>
 
   <script>
+    const mainTitle = document.getElementById('mainTitle');
+    const introScreen = document.getElementById('introScreen');
+    const letterStage = document.getElementById('letterStage');
     const envelope = document.getElementById('envelope');
     const instruction = document.getElementById('instruction');
-    const letterStage = document.getElementById('letterStage');
     const musicStage = document.getElementById('musicStage');
     const audio = document.getElementById('audio');
     const playBtn = document.getElementById('playBtn');
     const cassette = document.getElementById('cassette');
+
+    function revealLetterStage() {
+      introScreen.style.display = 'none';
+      letterStage.style.display = 'flex';
+    }
 
     function openEnvelope() {
       if (!envelope.classList.contains('open')) {
@@ -460,6 +532,7 @@
       event.stopPropagation();
       
       letterStage.style.display = 'none';
+      mainTitle.textContent = "Nuestra canción";
       musicStage.style.display = 'flex';
 
       audio.play().then(() => {
@@ -486,6 +559,7 @@
     function resetToLetter() {
       audio.pause();
       musicStage.style.display = 'none';
+      mainTitle.textContent = "Para alguien especial...";
       letterStage.style.display = 'flex';
       envelope.classList.remove('open');
       instruction.style.opacity = '0.8';
