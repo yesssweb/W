@@ -72,9 +72,20 @@
     .p6 { width: 23px; height: 27px; top: 60%; left: 88%; transform: rotate(-20deg); animation-delay: -3s; }
     .p7 { width: 19px; height: 23px; top: 8%;  left: 35%; transform: rotate(110deg); animation-delay: -4.5s; }
 
+   /* ANIMACIÓN CON MUCHO MÁS MOVIMIENTO (RÁPIDA, AMPLIA Y LATERAL) */
     @keyframes floatPetal {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-8px) rotate(8deg); }
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.88;
+      }
+      50% {
+        transform: translateY(-30px) translateX(15px) rotate(10deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(15px) translateX(-10px) rotate(-15deg);
+        opacity: 0.88;
+      }
     }
 
     .stage-container {
@@ -425,11 +436,11 @@
 
   <div class="stage-container">
 
-    <h1 class="header-title" id="mainTitle">Para alguien especial...</h1>
+    <h1 class="header-title" id="mainTitle">Con cariño, para mi niño bonito...</h1>
 
     <div class="intro-screen" id="introScreen">
       <button class="btn-start-gift" onclick="revealLetterStage()">
-        <span>Tienes un mensaje especial...</span>
+        <span>Continúa...</span>
         <span>✨</span>
       </button>
     </div>
@@ -456,7 +467,7 @@
             <p style="color: var(--accent-pink); margin-top: 8px;">♥</p>
           </div>
           
-          <button class="btn-continue" onclick="goToMusic(event)">Continuar ❤️</button>
+          <button class="btn-continue" onclick="goToMusic(event)">Continuar 💗</button>
         </div>
       </div>
 
@@ -466,13 +477,13 @@
     <div class="music-stage" id="musicStage">
 
       <div class="lyrics-box">
-        "Te siento al cantar y al escuchar cualquier canción bonita que hable del amor, de lo que siento ayer y hoy. Siempre te llevo al despertar."
+        "Quiero que sigamos aturrándonos la vida de recuerdos."
       </div>
 
       <div class="cassette" id="cassette">
         <div class="cassette-label">
-          <span>Canción Especial</span>
-          <span>♥</span>
+          <span>Acurrucar</span>
+          <span>💗</span>
         </div>
         <div class="wheels">
           <div class="wheel"><div class="wheel-spokes"></div></div>
@@ -518,7 +529,7 @@
       event.stopPropagation();
       
       letterStage.style.display = 'none';
-      mainTitle.textContent = "Nuestra canción";
+      mainTitle.textContent = "Escuchar esto me recuerda a tí";
       musicStage.style.display = 'flex';
 
       audio.play().then(() => {
