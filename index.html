@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Para Alguien Especial 💗</title>
+  <title>Para Alguien Especial</title>
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -14,7 +14,6 @@
       --envelope-flap: #2a2024;
       --paper-bg: #f8f0eb;
       --text-brown: #3d2b1f;
-      /* Rojo quemado para los pétalos */
       --petal-red: #8b1e2b;
       --petal-dark: #4a0e17;
     }
@@ -40,7 +39,6 @@
       background: radial-gradient(circle at center, #1e1317 0%, #080506 85%);
     }
 
-    /* FONDO DESTELLOS */
     .sparkle-bg {
       position: absolute;
       width: 100%;
@@ -54,7 +52,6 @@
       opacity: 0.35;
     }
 
-    /* PÉTALOS EN ROJO QUEMADO CON BORDES DEFINIDOS */
     .petal {
       position: absolute;
       background: linear-gradient(135deg, var(--petal-red), var(--petal-dark));
@@ -63,12 +60,10 @@
       pointer-events: none;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.85));
       animation: floatPetal 6s ease-in-out infinite alternate;
-      /* Borde y brillo interior acentuado */
       border: 1px solid rgba(232, 165, 152, 0.5);
       box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.15);
     }
 
-    /* Posición de los 7 pétalos */
     .p1 { width: 22px; height: 26px; top: 76%; left: 8%;  transform: rotate(35deg); }
     .p2 { width: 18px; height: 22px; top: 82%; left: 82%; transform: rotate(-45deg); }
     .p3 { width: 24px; height: 28px; top: 14%; left: 82%; transform: rotate(15deg); }
@@ -82,7 +77,6 @@
       100% { transform: translateY(-8px) rotate(8deg); }
     }
 
-    /* CONTENEDOR PRINCIPAL */
     .stage-container {
       width: 100%;
       max-width: 380px;
@@ -96,7 +90,6 @@
       z-index: 10;
     }
 
-    /* TÍTULO PRINCIPAL (SIEMPRE VISIBLE) */
     .header-title {
       font-family: 'Alex Brush', cursive;
       font-size: 2.8rem;
@@ -107,7 +100,6 @@
       animation: fadeIn 1s ease forwards;
     }
 
-    /* PANTALLA INICIAL (BOTÓN) */
     .intro-screen {
       display: flex;
       flex-direction: column;
@@ -136,16 +128,11 @@
       animation: pulseGlow 2s infinite alternate;
     }
 
-    .btn-start-gift:active {
-      transform: scale(0.95);
-    }
-
     @keyframes pulseGlow {
       0% { box-shadow: 0 0 15px rgba(232, 165, 152, 0.2); transform: scale(1); }
       100% { box-shadow: 0 0 25px rgba(232, 165, 152, 0.5); transform: scale(1.03); }
     }
 
-    /* ETAPAS CARTA Y MÚSICA */
     .letter-stage-wrapper {
       display: none;
       flex-direction: column;
@@ -153,7 +140,6 @@
       width: 100%;
     }
 
-    /* EL SOBRE CON TEXTURA Y PROFUNDIDAD */
     .envelope-wrapper {
       position: relative;
       width: 295px;
@@ -175,7 +161,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Solapa con textura */
     .envelope-wrapper .flap {
       position: absolute;
       top: 0;
@@ -191,7 +176,6 @@
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
     }
 
-    /* Bolsillo del sobre */
     .envelope-wrapper .pocket {
       position: absolute;
       bottom: 0;
@@ -205,7 +189,6 @@
       box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5);
     }
 
-    /* SELLO DE LACRE EN 3D DETALLADO */
     .heart-seal-3d {
       position: absolute;
       top: 102px;
@@ -228,13 +211,12 @@
     }
 
     .heart-seal-3d::after {
-      content: '💗';
+      content: '♥';
       font-size: 1.3rem;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
-    /* Papel de la Carta */
     .paper-letter {
       position: absolute;
       bottom: 10px;
@@ -252,7 +234,6 @@
       align-items: center;
     }
 
-    /* Scroll interno */
     .letter-scroll-content {
       width: 100%;
       height: 100%;
@@ -285,7 +266,6 @@
       transition: opacity 0.4s ease 0.7s;
     }
 
-    /* ESTADO ABIERTO */
     .envelope-wrapper.open .flap {
       transform: rotateX(180deg);
       z-index: 1;
@@ -314,7 +294,6 @@
       animation: fadeIn 1.2s ease forwards 0.8s;
     }
 
-    /* REPRODUCTOR MÚSICA */
     .music-stage {
       display: none;
       flex-direction: column;
@@ -436,7 +415,6 @@
 
   <div class="sparkle-bg"></div>
   
-  <!-- 7 Pétalos en Rojo Quemado -->
   <div class="petal p1"></div>
   <div class="petal p2"></div>
   <div class="petal p3"></div>
@@ -447,10 +425,8 @@
 
   <div class="stage-container">
 
-    <!-- TÍTULO PRINCIPAL -->
-    <h1 class="header-title" id="mainTitle">Para mi niño bonito...</h1>
+    <h1 class="header-title" id="mainTitle">Para alguien especial...</h1>
 
-    <!-- PANTALLA 0: BOTÓN INICIAL -->
     <div class="intro-screen" id="introScreen">
       <button class="btn-start-gift" onclick="revealLetterStage()">
         <span>Tienes un mensaje especial...</span>
@@ -458,7 +434,6 @@
       </button>
     </div>
 
-    <!-- PANTALLA 1: SOBRE Y CARTA -->
     <div class="letter-stage-wrapper" id="letterStage">
 
       <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
@@ -469,24 +444,25 @@
         <div class="paper-letter">
           <div class="letter-scroll-content">
             <p style="color: var(--accent-pink); margin-bottom: 8px;">♥</p>
-            <p>Hay cosas que no siempre sé cómo decir, pero que se quedan aquí, guardadas, pensando en ti.</p>
+            <p>Hoy quiero agradecerte, de una u otra forma, por el tiempo compartido. Sin ninguna etiqueta, ocupas una parte importante de mi vida.</p>
             <br>
-            <p>Gracias por cada momento, por cada palabra, por cada risa, por simplemente ser tú.</p>
+            <p>Quiero agradecerte por tu compañía, por escucharme y por las pocas veces que nos hemos visto, porque cada una de ellas ha sido especial para mí. Algo que, para los demás, puede parecer una simple salida, para nosotros se convierte en un momento de felicidad, donde platicamos y disfrutamos de nuestra compañía.</p>
             <br>
-            <p>Siempre te llevo presente en mi día a día, y por eso quería preparar este pequeño espacio solo para ti.</p>
+            <p>También agradezco que compartas conmigo las cosas de tu vida. Soy feliz escuchándote y acompañándote, porque me gusta estar para ti y espero poder seguir estando.</p>
             <br>
-            <p>Esto es para ti, con todo mi cariño.</p>
+            <p>Increíblemente, ya ha pasado un año. Somos humanos, no somos perfectos, pero aun así agradezco todo lo que hemos compartido durante este tiempo. A pesar de los días que pasan y de las pocas oportunidades que tenemos para vernos, cada momento juntos ha significado mucho para mí.</p>
+            <br>
+            <p>Gracias por formar parte de mi vida y por todos los recuerdos que hemos construido.</p>
             <p style="color: var(--accent-pink); margin-top: 8px;">♥</p>
           </div>
           
-          <button class="btn-continue" onclick="goToMusic(event)">Continuar 💗</button>
+          <button class="btn-continue" onclick="goToMusic(event)">Continuar ❤️</button>
         </div>
       </div>
 
       <p class="instruction-text" id="instruction">Toca el sello para abrir</p>
     </div>
 
-    <!-- PANTALLA 2: MÚSICA -->
     <div class="music-stage" id="musicStage">
 
       <div class="lyrics-box">
