@@ -515,8 +515,10 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
     const cassette = document.getElementById('cassette');
 
     function revealLetterStage() {
-      // Cargar/preparar el audio con la primera interacción del usuario
-      audio.load();
+      // Activa el audio desde la primera interacción del usuario para que el navegador dé permiso
+      if (audio) {
+        audio.load();
+      }
       introScreen.style.display = 'none';
       letterStage.style.display = 'flex';
     }
@@ -535,28 +537,33 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
       mainTitle.textContent = "💗";
       musicStage.style.display = 'flex';
 
-      // Intentar reproducir el audio de forma segura
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          playBtn.textContent = '❚❚';
-          cassette.classList.add('playing');
-        }).catch(error => {
-          console.log("El navegador requiere que presiones Play manualmente:", error);
-          playBtn.textContent = '▶';
-          cassette.classList.remove('playing');
-        });
+      if (audio) {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            playBtn.textContent = '❚❚';
+            cassette.classList.add('playing');
+          }).catch(error => {
+            console.log("El navegador requiere toque manual en reproducir:", error);
+            playBtn.textContent = '▶';
+            cassette.classList.remove('playing');
+          });
+        }
       }
     }
 
     function toggleAudio() {
+      if (!audio) return;
       if (audio.paused) {
-        audio.play().then(() => {
-          playBtn.textContent = '❚❚';
-          cassette.classList.add('playing');
-        }).catch(error => {
-          console.log("Error al reproducir el audio:", error);
-        });
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            playBtn.textContent = '❚❚';
+            cassette.classList.add('playing');
+          }).catch(error => {
+            console.log("Error al reproducir audio:", error);
+          });
+        }
       } else {
         audio.pause();
         playBtn.textContent = '▶';
@@ -565,7 +572,7 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
     }
 
     function resetToLetter() {
-      audio.pause();
+      if (audio) audio.pause();
       musicStage.style.display = 'none';
       mainTitle.textContent = "Con cariño, para mi niño bonito...";
       letterStage.style.display = 'flex';
