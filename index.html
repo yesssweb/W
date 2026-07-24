@@ -72,7 +72,6 @@
     .p6 { width: 23px; height: 27px; top: 60%; left: 88%; transform: rotate(-20deg); animation-delay: -3s; }
     .p7 { width: 19px; height: 23px; top: 8%;  left: 35%; transform: rotate(110deg); animation-delay: -4.5s; }
 
-   /* ANIMACIÓN CON MUCHO MÁS MOVIMIENTO (RÁPIDA, AMPLIA Y LATERAL) */
     @keyframes floatPetal {
       0% {
         transform: translateY(0) translateX(0) rotate(0deg);
@@ -493,7 +492,7 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
       </div>
 
       <div class="controls-bar">
-        <button class="btn-play-toggle" id="playBtn" onclick="toggleAudio()">❚❚</button>
+        <button class="btn-play-toggle" id="playBtn" onclick="toggleAudio()">▶</button>
       </div>
 
       <button class="btn-back" onclick="resetToLetter()">← Volver a la carta</button>
@@ -514,11 +513,23 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
     const playBtn = document.getElementById('playBtn');
     const cassette = document.getElementById('cassette');
 
+    // Manejadores de eventos directos del elemento de audio
+    audio.addEventListener('play', () => {
+      playBtn.textContent = '❚❚';
+      cassette.classList.add('playing');
+    });
+
+    audio.addEventListener('pause', () => {
+      playBtn.textContent = '▶';
+      cassette.classList.remove('playing');
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      cassette.classList.remove('playing');
+    });
+
     function revealLetterStage() {
-      // Activa el audio desde la primera interacción del usuario para que el navegador dé permiso
-      if (audio) {
-        audio.load();
-      }
       introScreen.style.display = 'none';
       letterStage.style.display = 'flex';
     }
@@ -537,42 +548,32 @@ A veces solo quiero escucharte hablar. Saber cómo estuvo tu día, reírnos de c
       mainTitle.textContent = "💗";
       musicStage.style.display = 'flex';
 
-      if (audio) {
+      // Intenta reproducir sin bloquear la interfaz
+      try {
         const playPromise = audio.play();
         if (playPromise !== undefined) {
-          playPromise.then(() => {
-            playBtn.textContent = '❚❚';
-            cassette.classList.add('playing');
-          }).catch(error => {
-            console.log("El navegador requiere toque manual en reproducir:", error);
+          playPromise.catch(() => {
+            // Si el navegador bloquea la reproducción automática, no congela el flujo
             playBtn.textContent = '▶';
-            cassette.classList.remove('playing');
           });
         }
+      } catch (e) {
+        console.log("Audio no listo");
       }
     }
 
     function toggleAudio() {
-      if (!audio) return;
       if (audio.paused) {
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            playBtn.textContent = '❚❚';
-            cassette.classList.add('playing');
-          }).catch(error => {
-            console.log("Error al reproducir audio:", error);
-          });
-        }
+        audio.play().catch(err => {
+          alert("No se pudo cargar la canción. Verifica que el archivo 'cancion.mp3' esté en la misma carpeta.");
+        });
       } else {
         audio.pause();
-        playBtn.textContent = '▶';
-        cassette.classList.remove('playing');
       }
     }
 
     function resetToLetter() {
-      if (audio) audio.pause();
+      audio.pause();
       musicStage.style.display = 'none';
       mainTitle.textContent = "Con cariño, para mi niño bonito...";
       letterStage.style.display = 'flex';
